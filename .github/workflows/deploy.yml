@@ -1,0 +1,50 @@
+name: Deploy static site to VPS
+
+on:
+  push:
+    branches: [ main ]   # триггер
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    # Если есть сборка, раскомментируйте
+    # - name: Build
+    #   run: |
+    #     npm ci
+    #     npm run build
+
+    - name: Install rsync
+      run: sudo apt-get update && sudo apt-get install -y rsync
+
+    - name: Copy files via rsync
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        SERVER_IP:       ${{ secrets.SERVER_IP }}
+        SERVER_USER:     ${{ secrets.SERVER_USER }}
+      run: |
+        # 1.  кладём ключ в агент
+        install -m 600 -D /dev/null ~/.ssh/id_ed25519
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+        # 2.  добавляем ключ сервера к known_hosts
+        ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
+
+        # 3.  деплой (папку 'landing' меняйте на свою)
+        rsync -av --delete ./landing/ "$SERVER_USER@$SERVER_IP:/var/www/html"
+
+    - name: Reload Nginx
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
+        SERVER_IP:       ${{ secrets.SERVER_IP }}
+        SERVER_USER:     ${{ secrets.SERVER_USER }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_IP" \
+            "sudo systemctl reload nginx"
