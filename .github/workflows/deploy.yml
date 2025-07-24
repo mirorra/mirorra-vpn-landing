@@ -35,7 +35,7 @@ jobs:
         # 2.  добавляем ключ сервера к known_hosts
         ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
-        # 3.  деплой (папку 'landing' меняйте на свою)
+        # 3.  деплой
         rsync -av --delete ./  $SERVER_USER@$SERVER_IP:/var/www/html
 
 
