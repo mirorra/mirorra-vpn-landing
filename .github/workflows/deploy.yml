@@ -36,7 +36,8 @@ jobs:
         ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
         # 3.  деплой (папку 'landing' меняйте на свою)
-        rsync -av --delete ./landing/ "$SERVER_USER@$SERVER_IP:/var/www/html"
+        rsync -av --delete ./  $SERVER_USER@$SERVER_IP:/var/www/html
+
 
     - name: Reload Nginx
       env:
