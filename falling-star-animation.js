@@ -43,11 +43,11 @@ class FallingStarAnimation {
             active: false
         };
         this.trail = [];
-        this.maxTrailLength = this.isMobile ? 60 : 120;
+        this.maxTrailLength = this.isMobile ? 30 : 60;
         this.angle = 45 * Math.PI / 180; // 45 degrees (perfect diagonal)
-        this.speed = 0.01; // Fixed speed for consistent timing across devices
+        this.speed = 0.02; // Fixed speed for consistent timing across devices
         this.fadeOutTime = 0;
-        this.fadeOutDuration = 1.0; // 1 second fade out
+        this.fadeOutDuration = 0.2; // 0.2 seconds fade out
         this.isFadingOut = false;
         this.starCount = 0; // Counter for stars
         
@@ -70,13 +70,19 @@ class FallingStarAnimation {
         this.starCount++;
         
         if (this.starCount === 1) {
-            // First star: perfect diagonal from top-right to bottom-left
+            // First star: from top-right corner to middle of left side
             this.star.x = 1.0; // Top-right corner
             this.star.y = 1.0;
             
-            // Perfect 45-degree diagonal movement
-            this.star.vx = -Math.cos(this.angle) * this.speed;
-            this.star.vy = -Math.sin(this.angle) * this.speed;
+            // Calculate angle to hit middle of left side (y = 0)
+            const targetX = -1.0; // Left side
+            const targetY = 0.0;  // Middle of screen
+            const deltaX = targetX - this.star.x;
+            const deltaY = targetY - this.star.y;
+            const firstStarAngle = Math.atan2(deltaY, deltaX);
+            
+            this.star.vx = Math.cos(firstStarAngle) * this.speed;
+            this.star.vy = Math.sin(firstStarAngle) * this.speed;
         } else {
             // Subsequent stars: slight random variation
             const randomX = (Math.random() - 0.5) * 1.6; // Random X position from -0.8 to 0.8
@@ -117,7 +123,7 @@ class FallingStarAnimation {
             uniform vec2 u_resolution;
             uniform float u_time;
             uniform vec2 u_starPos;
-            uniform vec2 u_trail[120];
+            uniform vec2 u_trail[60];
             uniform int u_trailLength;
             uniform bool u_isMobile;
             varying vec2 v_texCoord;
@@ -138,8 +144,8 @@ class FallingStarAnimation {
                 
                 // Falling trail effect
                 vec3 trailColor = vec3(0.0);
-                int maxIterations = u_isMobile ? 60 : 120;
-                for (int i = 0; i < 120; i++) {
+                int maxIterations = u_isMobile ? 30 : 60;
+                for (int i = 0; i < 60; i++) {
                     if (i >= u_trailLength || i >= maxIterations) break;
                     vec2 trailPos = u_trail[i];
                     float trailDist = distance(pos, trailPos);
@@ -241,8 +247,12 @@ class FallingStarAnimation {
             this.fadeOutTime += 0.016; // ~60fps
             
             // Gradually remove trail points
-            if (this.trail.length > 0 && this.fadeOutTime > 0.1) {
-                this.trail.shift();
+            if (this.trail.length > 0 && this.fadeOutTime > 0.02) {
+                // Remove multiple points at once for faster fade out
+                const pointsToRemove = Math.min(3, this.trail.length);
+                for (let i = 0; i < pointsToRemove; i++) {
+                    this.trail.shift();
+                }
                 this.fadeOutTime = 0; // Reset timer
             }
             
