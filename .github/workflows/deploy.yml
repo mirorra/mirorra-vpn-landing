@@ -36,7 +36,7 @@ jobs:
         ssh-keyscan -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
         # 3.  деплой
-        rsync -av --delete ./  $SERVER_USER@$SERVER_IP:/var/www/html
+        rsync -av --delete ./  "$SERVER_USER@$SERVER_IP:/var/www/mirrora"
 
 
     - name: Reload Nginx
