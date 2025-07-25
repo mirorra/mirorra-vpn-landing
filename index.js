@@ -182,4 +182,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // Start typing effect after a short delay
         setTimeout(typeWriter, 500);
     }
-}); 
+});
