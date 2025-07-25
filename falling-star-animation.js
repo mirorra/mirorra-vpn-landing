@@ -45,9 +45,9 @@ class FallingStarAnimation {
         this.trail = [];
         this.maxTrailLength = this.isMobile ? 60 : 120;
         this.angle = 45 * Math.PI / 180; // 45 degrees (perfect diagonal)
-        this.speed = 0.009;
+        this.speed = 0.01; // Fixed speed for consistent timing across devices
         this.fadeOutTime = 0;
-        this.fadeOutDuration = 3.0; // 3 seconds fade out
+        this.fadeOutDuration = 1.0; // 1 second fade out
         this.isFadingOut = false;
         this.starCount = 0; // Counter for stars
         
@@ -134,7 +134,7 @@ class FallingStarAnimation {
                 
                 // Star core (tiny bright center)
                 float starCore = 1.0 - smoothstep(0.0, 0.005, starDist);
-                starColor += vec3(1.0, 1.0, 1.0) * starCore * 0.14;
+                starColor += vec3(1.0, 1.0, 1.0) * starCore * 0.18;
                 
                 // Falling trail effect
                 vec3 trailColor = vec3(0.0);
@@ -146,11 +146,11 @@ class FallingStarAnimation {
                     float trailAlpha = float(i) / float(u_trailLength);
                     
                     // Falling trail with better blending
-                    float trailGlow = 1.0 / (1.0 + trailDist * 150.0) * trailAlpha * 0.21;
+                    float trailGlow = 1.0 / (1.0 + trailDist * 600.0) * trailAlpha * 0.21;
                     trailColor += vec3(0.2, 0.5, 0.8) * trailGlow;
                     
                     // Add additional glow for smoother effect
-                    float extraGlow = 1.0 / (1.0 + trailDist * 300.0) * trailAlpha * 0.105;
+                    float extraGlow = 1.0 / (1.0 + trailDist * 200.0) * trailAlpha * 0.205;
                     trailColor += vec3(0.1, 0.3, 0.6) * extraGlow;
                 }
                 
@@ -318,20 +318,16 @@ class FallingStarAnimation {
     }
     
     animate() {
-        // Adaptive frame rate for mobile
-        const targetFPS = this.isMobile ? 30 : 60;
+        // Fixed frame rate for consistent timing across devices
+        const targetFPS = 60;
         const frameTime = 1000 / targetFPS;
         
         this.time += frameTime / 1000;
         this.updateStar();
         this.render();
         
-        // Throttle animation on mobile
-        if (this.isMobile) {
-            setTimeout(() => requestAnimationFrame(() => this.animate()), frameTime);
-        } else {
-            requestAnimationFrame(() => this.animate());
-        }
+        // Consistent timing on all devices
+        setTimeout(() => requestAnimationFrame(() => this.animate()), frameTime);
     }
 }
 
