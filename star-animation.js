@@ -15,10 +15,11 @@ class StarAnimation {
         
         this.time = 0;
         this.orbitRadius = 0.8;
-        this.orbitSpeed = 0.4;
+        this.baseSpeed = 0.4;
+        this.boostSpeed = 1.2;
         this.orbitCenter = { x: 0, y: 0 };
         this.trail = [];
-        this.maxTrailLength = 60;
+        this.maxTrailLength = 80;
         
         this.initShaders();
         this.initBuffers();
@@ -54,7 +55,7 @@ class StarAnimation {
             uniform vec2 u_resolution;
             uniform float u_time;
             uniform vec2 u_starPos;
-            uniform vec2 u_trail[60];
+            uniform vec2 u_trail[80];
             uniform int u_trailLength;
             varying vec2 v_texCoord;
             
@@ -74,12 +75,12 @@ class StarAnimation {
                 
                 // Neon trail effect
                 vec3 trailColor = vec3(0.0);
-                for (int i = 0; i < 60; i++) {
+                for (int i = 0; i < 80; i++) {
                     if (i >= u_trailLength) break;
                     vec2 trailPos = u_trail[i];
                     float trailDist = distance(pos, trailPos);
                     float trailAlpha = float(i) / float(u_trailLength);
-                    float trailGlow = 1.0 / (1.0 + trailDist * 200.0) * trailAlpha * 0.3;
+                    float trailGlow = 1.0 / (1.0 + trailDist * 150.0) * trailAlpha * 0.4;
                     trailColor += vec3(0.2, 0.5, 0.8) * trailGlow;
                 }
                 
@@ -164,8 +165,20 @@ class StarAnimation {
     }
     
     updateStar() {
-        // Calculate circular orbit position
-        const angle = this.time * this.orbitSpeed;
+        // Calculate variable speed based on position
+        const currentAngle = (this.time * this.baseSpeed) % (2 * Math.PI);
+        let speedMultiplier = 1.0;
+        
+        // Boost speed in the middle section (between π/4 and 3π/4, and 5π/4 and 7π/4)
+        if ((currentAngle > Math.PI/4 && currentAngle < 3*Math.PI/4) || 
+            (currentAngle > 5*Math.PI/4 && currentAngle < 7*Math.PI/4)) {
+            speedMultiplier = this.boostSpeed / this.baseSpeed;
+        }
+        
+        // Calculate position with variable speed
+        const totalDistance = this.time * this.baseSpeed * speedMultiplier;
+        const angle = totalDistance % (2 * Math.PI);
+        
         this.starPosition = {
             x: this.orbitCenter.x + Math.cos(angle) * this.orbitRadius,
             y: this.orbitCenter.y + Math.sin(angle) * this.orbitRadius
