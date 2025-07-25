@@ -27,8 +27,15 @@ class StarAnimation {
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
         
+        // Handle orientation change on mobile
+        if (this.isMobile) {
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => this.resizeCanvas(), 100);
+            });
+        }
+        
         this.time = 0;
-        this.orbitRadius = 0.8;
+        this.orbitRadius = 0.8; // Will be adjusted in resizeCanvas
         this.baseSpeed = 0.4;
         this.boostSpeed = 1.2;
         this.orbitCenter = { x: 0, y: 0 };
@@ -47,6 +54,20 @@ class StarAnimation {
         this.canvas.width = rect.width * pixelRatio;
         this.canvas.height = rect.height * pixelRatio;
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Adjust orbit for mobile orientation
+        if (this.isMobile) {
+            const isPortrait = window.innerHeight > window.innerWidth;
+            if (isPortrait) {
+                // In portrait mode, adjust orbit to be more horizontal
+                this.orbitRadius = 0.6;
+            } else {
+                // In landscape mode, use normal orbit
+                this.orbitRadius = 0.8;
+            }
+        } else {
+            this.orbitRadius = 0.8;
+        }
     }
     
     initShaders() {
