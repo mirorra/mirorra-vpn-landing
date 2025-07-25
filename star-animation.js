@@ -4,10 +4,24 @@ class StarAnimation {
         this.canvas = document.getElementById('starCanvas');
         if (!this.canvas) return;
         
-        this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+        // Optimize for mobile devices
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        this.gl = this.canvas.getContext('webgl', {
+            antialias: false,
+            alpha: true,
+            powerPreference: 'high-performance'
+        }) || this.canvas.getContext('experimental-webgl');
+        
         if (!this.gl) {
             console.warn('WebGL not supported');
             return;
+        }
+        
+        // Mobile optimizations
+        if (this.isMobile) {
+            this.gl.getExtension('OES_standard_derivatives');
+            this.gl.getExtension('OES_element_index_uint');
         }
         
         this.resizeCanvas();
@@ -19,7 +33,7 @@ class StarAnimation {
         this.boostSpeed = 1.2;
         this.orbitCenter = { x: 0, y: 0 };
         this.trail = [];
-        this.maxTrailLength = 80;
+        this.maxTrailLength = this.isMobile ? 40 : 80; // Reduce trail length on mobile
         
         this.initShaders();
         this.initBuffers();
@@ -28,8 +42,10 @@ class StarAnimation {
     
     resizeCanvas() {
         const rect = this.canvas.getBoundingClientRect();
-        this.canvas.width = rect.width * window.devicePixelRatio;
-        this.canvas.height = rect.height * window.devicePixelRatio;
+        // Limit resolution on mobile for better performance
+        const pixelRatio = this.isMobile ? Math.min(window.devicePixelRatio, 2) : window.devicePixelRatio;
+        this.canvas.width = rect.width * pixelRatio;
+        this.canvas.height = rect.height * pixelRatio;
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     }
     
@@ -57,6 +73,7 @@ class StarAnimation {
             uniform vec2 u_starPos;
             uniform vec2 u_trail[80];
             uniform int u_trailLength;
+            uniform bool u_isMobile;
             varying vec2 v_texCoord;
             
             void main() {
@@ -75,8 +92,9 @@ class StarAnimation {
                 
                 // Neon trail effect
                 vec3 trailColor = vec3(0.0);
+                int maxIterations = u_isMobile ? 40 : 80;
                 for (int i = 0; i < 80; i++) {
-                    if (i >= u_trailLength) break;
+                    if (i >= u_trailLength || i >= maxIterations) break;
                     vec2 trailPos = u_trail[i];
                     float trailDist = distance(pos, trailPos);
                     float trailAlpha = float(i) / float(u_trailLength);
@@ -162,6 +180,7 @@ class StarAnimation {
         this.starPosLocation = this.gl.getUniformLocation(this.program, 'u_starPos');
         this.trailLocation = this.gl.getUniformLocation(this.program, 'u_trail');
         this.trailLengthLocation = this.gl.getUniformLocation(this.program, 'u_trailLength');
+        this.isMobileLocation = this.gl.getUniformLocation(this.program, 'u_isMobile');
     }
     
     updateStar() {
@@ -201,6 +220,7 @@ class StarAnimation {
         this.gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height);
         this.gl.uniform1f(this.timeLocation, this.time);
         this.gl.uniform2f(this.starPosLocation, this.starPosition.x, this.starPosition.y);
+        this.gl.uniform1i(this.isMobileLocation, this.isMobile ? 1 : 0);
         
         // Set trail uniforms
         const trailArray = new Float32Array(this.maxTrailLength * 2);
@@ -230,10 +250,20 @@ class StarAnimation {
     }
     
     animate() {
-        this.time += 0.016; // ~60fps
+        // Adaptive frame rate for mobile
+        const targetFPS = this.isMobile ? 30 : 60;
+        const frameTime = 1000 / targetFPS;
+        
+        this.time += frameTime / 1000;
         this.updateStar();
         this.render();
-        requestAnimationFrame(() => this.animate());
+        
+        // Throttle animation on mobile
+        if (this.isMobile) {
+            setTimeout(() => requestAnimationFrame(() => this.animate()), frameTime);
+        } else {
+            requestAnimationFrame(() => this.animate());
+        }
     }
 }
 
