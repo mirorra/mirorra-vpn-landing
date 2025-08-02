@@ -172,11 +172,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 typingElement.textContent = text.substring(0, i + 1);
                 i++;
                 setTimeout(typeWriter, 100);
+            } else {
+                // Remove blinking cursor after typing is complete
+                typingElement.classList.add('completed');
             }
         };
         
         // Start typing effect after a short delay
         setTimeout(typeWriter, 500);
+    }
+
+    // Scroll to top functionality
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    
+    if (scrollToTopBtn) {
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollPercentage = (scrollTop / (documentHeight - windowHeight)) * 100;
+            
+            // Show button when scrolled more than 50% of the page
+            if (scrollPercentage > 50) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+        
+        // Smooth scroll to top when button is clicked
+        scrollToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     }
 });
 

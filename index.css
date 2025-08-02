@@ -246,6 +246,12 @@ h1, h2, h3, h4, h5, h6 {
     animation: blink 1s infinite;
 }
 
+/* Remove cursor after typing is complete */
+.typing-text.completed {
+    border-right: none;
+    animation: none;
+}
+
 @keyframes blink {
     0%, 50% {
         border-color: transparent;
@@ -1051,5 +1057,64 @@ h1, h2, h3, h4, h5, h6 {
         .modal-content h2 {
             font-size: 1.5rem;
         }
+    }
+}
+
+/* Scroll to top button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background: rgb(255 255 255 / 0%);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 18px 4px rgba(59, 130, 246, 0.5);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: rgba(59, 130, 246, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.scroll-to-top:active {
+    transform: translateY(0);
+}
+
+.scroll-to-top svg {
+    transition: transform 0.2s ease;
+}
+
+.scroll-to-top:hover svg {
+    transform: translateY(-1px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
