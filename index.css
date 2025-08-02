@@ -878,7 +878,7 @@ h1, h2, h3, h4, h5, h6 {
     background: #000000e6;
     padding: 40px;
     border: 2px solid #ffffff;
-    border-radius: 0;
+    border-radius: 22px;
     opacity: 0;
     transform: scale(0.8) translateY(-20px);
     transition: all 0.3s ease;

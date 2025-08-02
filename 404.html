@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Mirrora</title>
+    <meta name="description" content="Page not found. Return to Mirrora homepage.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+    
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .error-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .error-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 8rem;
+            font-weight: 900;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        
+        .error-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .error-description {
+            font-family: 'Sora', sans-serif;
+            font-size: 1.25rem;
+            color: #9ca3af;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-back {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-back:hover {
+            background: #fff;
+            color: #000;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+        
+        .floating-element:nth-child(3) {
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        .floating-element:nth-child(4) {
+            top: 30%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+        
+        .floating-element:nth-child(5) {
+            top: 70%;
+            left: 60%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .error-number {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .error-description {
+                font-size: 1.125rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-home,
+            .btn-back {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .error-number {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 1.75rem;
+            }
+            
+            .error-description {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">
+                <a href="/">
+                    <img src="favicon/favicon.svg" alt="Mirrora" class="logo-icon">
+                    Mirrora
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="error-container">
+        <!-- Floating Elements -->
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        
+        <!-- Error Content -->
+        <div class="error-content">
+            <div class="error-number">404</div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-description">
+                Oops! The page you're looking for doesn't exist. 
+                It might have been moved, deleted, or you entered the wrong URL.
+            </p>
+            <div class="error-actions">
+                <a href="/" class="btn-home">Go Home</a>
+                <button onclick="history.back()" class="btn-back">Go Back</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content container">
+            <div class="footer-logo">Mirrora</div>
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 Mirrora. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effect to floating elements
+            const floatingElements = document.querySelectorAll('.floating-element');
+            floatingElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    this.style.transform = 'scale(2)';
+                    this.style.opacity = '0';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.opacity = '';
+                    }, 300);
+                });
+            });
+            
+            // Add pointer events to floating elements for interaction
+            document.querySelector('.floating-elements').style.pointerEvents = 'auto';
+        });
+    </script>
+</body>
+</html> 
