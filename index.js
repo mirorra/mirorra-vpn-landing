@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-        
+
         question.addEventListener('click', function() {
             const isActive = item.classList.contains('active');
             
