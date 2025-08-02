@@ -167,6 +167,7 @@ h1, h2, h3, h4, h5, h6 {
 .logo-icon {
     width: 3rem;
     height: 3rem;
+    border-radius: 6px;
 }
 
 .nav-links {
@@ -372,8 +373,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Section headers */
 .section-header {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-bottom: 4rem;
+    align-items: center;
 }
 
 .section-header h2 {
@@ -381,8 +385,9 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2.25rem;
     font-weight: 800;
     margin-bottom: 1rem;
-    line-height: 2.5rem;
+    line-height: 1.5;
     color: #ffffff;
+    max-width: 800px;
 }
 
 .section-header p {
@@ -420,7 +425,11 @@ h1, h2, h3, h4, h5, h6 {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: 1rem;
+    background-image: url("images/bg-2.png");
+    padding: 80px 40px;
+    border-radius: 1rem;
+    background-position: bottom;
 }
 
 .feature-card {
@@ -482,22 +491,6 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
 }
 
-.star-field {
-    background-image: radial-gradient(2px 2px at 20px 30px, #0078ff, transparent), radial-gradient(2px 2px at 40px 70px, rgba(147, 197, 253, 0.8), transparent), radial-gradient(1px 1px at 90px 40px, #0473ff, transparent), radial-gradient(1px 1px at 130px 80px, rgba(191, 219, 254, 0.6), transparent), radial-gradient(2px 2px at 160px 30px, #006dff, transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: twinkle 20s linear infinite;
-}
-
-@keyframes twinkle {
-    0% {
-        transform: translateY(0px);
-    }
-    100% {
-        transform: translateY(-100px);
-    }
-}
-
 .privacy-hero-content {
     gap: 3rem;
     padding: 5rem 0;
@@ -543,11 +536,6 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 1rem;
     position: relative;
     padding: 2rem;
-}
-
-/* Adjust featured card for badge and keep content padding */
-.pricing-card.featured {
-    padding-top: calc(2.5rem + 2rem);
 }
 
 .pricing-badge {
@@ -644,9 +632,7 @@ h1, h2, h3, h4, h5, h6 {
 .faq-item {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 0.75rem;
-    background: #339de50f;
     margin-bottom: 1rem;
     padding: 0 !important;
 }
@@ -656,7 +642,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     text-align: left;
     background: #339de50f;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 0.75rem;
     padding: 1.5rem;
     cursor: pointer;
@@ -668,7 +654,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .faq-question:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(51, 147, 229, 0.1);
 }
 
 .faq-question h3 {
@@ -696,7 +682,6 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     transition: all 0.3s;
     border-radius: 0 0 0.75rem 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
 }
 
 .faq-item.active .faq-answer {
@@ -960,7 +945,6 @@ h1, h2, h3, h4, h5, h6 {
 
     .section-header h2 {
         font-size: 3rem;
-        line-height: 1;
     }
 
     .cta-content h2 {
