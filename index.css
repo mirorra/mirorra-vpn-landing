@@ -58,6 +58,48 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* iOS Safari overscroll background */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* iOS Safari viewport and overscroll styling */
+html {
+    background-color: #000;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+/* iOS Safari safe area and overscroll */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* iOS Safari specific overscroll behavior */
+@supports (-webkit-touch-callout: none) {
+    body {
+        /* Prevent overscroll bounce effect */
+        overscroll-behavior: none;
+        /* Ensure black background on overscroll */
+        background-color: #000 !important;
+    }
+    
+    html {
+        /* Prevent overscroll bounce effect */
+        overscroll-behavior: none;
+        /* Ensure black background on overscroll */
+        background-color: #000 !important;
+    }
+    
+    /* iOS Safari viewport height fix */
+    .hero, .features, .pricing, .faq, .cta {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
 }
 
 /* Prevent page jump when modal opens */
