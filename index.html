@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mirrora VPN - Fast. Secure. Private.</title>
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
     <meta name="description" content="One-click VPN with total traffic encryption. Secure your galaxy of data.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +25,10 @@
         <div class="container">
             <nav class="nav">
                 <div class="logo">
-                                            <a href="#home">Mirrora VPN</a>
+                    <a href="#home">
+                        <img src="favicon/favicon.svg" alt="Mirrora VPN" class="logo-icon" />
+                        Mirrora VPN
+                    </a>
                 </div>
                 <div class="nav-links">
                     <a href="#features">Features</a>
@@ -43,7 +51,7 @@
             <div class="hero-content">
                 <h1>Fast. Secure. Private.</h1>
                 <p>One-click VPN with total traffic encryption.</p>
-                <button class="btn-primary">Download Mirrora VPN</button>
+                <button class="btn-primary" onclick="showWaitlistModal()">Coming Soon - Join Waitlist</button>
                 <p class="hero-subtitle">Available for iOS & macOS</p>
             </div>
         </div>
@@ -121,49 +129,75 @@
         <div class="container">
             <div class="section-header">
                 <h2>Choose Your Protection</h2>
-                <p>Start your journey to digital freedom</p>
+                <p>All plans include the same powerful features - choose what works best for you</p>
             </div>
             <div class="pricing-grid">
-                <div class="pricing-card">
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
                     <div class="pricing-header">
-                        <h3>Free</h3>
-                        <p>7-day trial</p>
+                        <h3>Free Trial Activated</h3>
+                        <p>Start your journey with 3 days free</p>
                         <div class="price">
                             <span class="price-amount">$0</span>
+                            <span class="price-period">/3 days</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>🔒 Military-grade encryption</li>
+                        <li>⚡ Unlimited bandwidth & speed</li>
+                        <li>🛡️ Ad & tracker blocking</li>
+                        <li>✅ Full feature access</li>
+                    </ul>
+                    <div class="pricing-button">
+                        <a href="#" onclick="showWaitlistModal()">
+                            <button class="btn-premium">Start Free Trial</button>
+                        </a>
+                    </div>
+                    <p class="pricing-note">Perfect for testing Mirrora</p>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Weekly Subscription</h3>
+                        <p>Just $0.60 per day</p>
+                        <div class="price">
+                            <span class="price-amount">$4.19</span>
                             <span class="price-period">/week</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>Basic encryption</li>
-                        <li>5 server locations</li>
-                        <li>1 device</li>
-                        <li>Standard support</li>
+                        <li>🔒 Military-grade encryption</li>
+                        <li>⚡ Unlimited bandwidth & speed</li>
+                        <li>🛡️ Ad & tracker blocking</li>
+                        <li>✅ Full feature access</li>
                     </ul>
                     <div class="pricing-button">
-                        <button class="btn-outline">Start Trial</button>
+                        <a href="#" onclick="showWaitlistModal()">
+                            <button class="btn-outline">Subscribe Weekly</button>
+                        </a>
                     </div>
+                    <p class="pricing-note">Flexible weekly billing</p>
                 </div>
-                <div class="pricing-card featured">
-                    <div class="pricing-badge">Most Popular</div>
+                <div class="pricing-card">
                     <div class="pricing-header">
-                        <h3>Pro</h3>
-                        <p>∞ bandwidth</p>
+                        <h3>Monthly Subscription</h3>
+                        <p>Just $0.30 per day</p>
                         <div class="price">
-                            <span class="price-amount">$9.99</span>
+                            <span class="price-amount">$9.19</span>
                             <span class="price-period">/month</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>Military-grade encryption</li>
-                        <li>100+ server locations</li>
-                        <li>5 devices</li>
-                        <li>Priority support</li>
-                        <li>Ad & tracker blocking</li>
-                        <li>Kill switch protection</li>
+                        <li>🔒 Military-grade encryption</li>
+                        <li>⚡ Unlimited bandwidth & speed</li>
+                        <li>🛡️ Ad & tracker blocking</li>
+                        <li>✅ Full feature access</li>
                     </ul>
                     <div class="pricing-button">
-                        <button class="btn-accent">Go Pro</button>
+                        <a href="#" onclick="showWaitlistModal()">
+                            <button class="btn-outline">Subscribe Monthly</button>
+                        </a>
                     </div>
+                    <p class="pricing-note">Best value - save 50% vs weekly</p>
                 </div>
             </div>
         </div>
@@ -178,35 +212,99 @@
             <div class="faq-list">
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h3>How does Mirrora VPN protect my privacy?</h3>
+                        <h3>❓ What is a VPN and why do I need it?</h3>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="m6 9 6 6 6-6"></path>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Mirrora VPN uses military-grade encryption to protect your data and hide your IP address from prying eyes.</p>
+                        <p><strong>Answer:</strong><br>
+                        A VPN (Virtual Private Network) encrypts your internet traffic and hides your IP address. It protects your privacy, especially on public Wi-Fi, and helps you access content without geo-restrictions.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h3>Can I use Mirrora VPN on multiple devices?</h3>
+                        <h3>❓ Why should I choose Mirrora VPN?</h3>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="m6 9 6 6 6-6"></path>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Yes! Pro plans support up to 5 devices simultaneously.</p>
+                        <p><strong>Answer:</strong><br>
+                        Mirrora is a premium VPN focused on privacy, performance, and simplicity. We use IKEv2 for fast and stable connections, with <strong>WireGuard support coming soon</strong>. Our sleek interface and secure infrastructure provide a safe online experience in just one tap.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h3>Does Mirrora VPN log my activity?</h3>
+                        <h3>❓ Does Mirrora keep logs of my activity?</h3>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="m6 9 6 6 6-6"></path>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>No, we have a strict no-logs policy. Your privacy is our priority.</p>
+                        <p><strong>Answer:</strong><br>
+                        Your privacy is our top priority.<br>
+                        <strong>We do not monitor or sell your data</strong>, and no personal activity is stored. However, we may retain minimal connection metadata in line with legal requirements in certain jurisdictions — only if officially requested by government agencies and strictly within the law.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h3>❓ Can I use Mirrora VPN for streaming?</h3>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Answer:</strong><br>
+                        Absolutely! Mirrora lets you watch your favorite shows and movies on services like Netflix, HBO Max, and others, unlocking geo-restricted content with great speed and stability.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h3>❓ What devices are supported?</h3>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Answer:</strong><br>
+                        Mirrora is currently available on <strong>iOS</strong>, with <strong>macOS support coming soon</strong>. We are actively working to bring Mirrora to more platforms in the near future.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h3>❓ How do I install Mirrora and get started?</h3>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Answer:</strong><br>
+                        Mirrora VPN is coming soon! Join our waitlist to be among the first 100 users who will get 1 months of free VPN service. Write "To the stars!" in your message to claim this special offer.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h3>❓ Can I cancel my subscription?</h3>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Answer:</strong><br>
+                        Yes, you can cancel anytime through your Apple account settings. No hidden terms or fees.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h3>❓ Is there a free trial or refund policy?</h3>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Answer:</strong><br>
+                        Yes! We offer a <strong>3-day free trial</strong> so you can explore Mirrora risk-free.</p>
                     </div>
                 </div>
             </div>
@@ -218,19 +316,19 @@
             <div class="cta-content">
                 <h2>Ready for star-level privacy?</h2>
                 <p>Join thousands of users who trust Mirrora VPN to protect their digital galaxy.</p>
-                <button class="btn-primary btn-pulse">Download Mirrora VPN</button>
+                <button class="btn-primary btn-pulse" onclick="showWaitlistModal()">Coming Soon - Join Waitlist</button>
                 <div class="cta-features">
                     <div class="cta-feature">
                         <div class="cta-dot"></div>
-                        30-day money-back guarantee
+                        Military-grade encryption
                     </div>
                     <div class="cta-feature">
                         <div class="cta-dot"></div>
-                        No logs policy
+                        Ad & tracker blocking
                     </div>
                     <div class="cta-feature">
                         <div class="cta-dot"></div>
-                        Instant setup
+                        Unlimited bandwidth & speed
                     </div>
                 </div>
             </div>
@@ -244,7 +342,7 @@
                                     <div class="footer-links">
                         <a href="privacy.html">Privacy Policy</a>
                         <a href="terms.html">Terms of Service</a>
-                        <a href="mailto:support@mirrora.com">Support</a>
+                        <a href="mailto:hello@mirroravpn.com">Support</a>
                     </div>
                 <div class="footer-copyright">
                                             <p>© 2024 Mirrora VPN. All rights reserved. Secure your galaxy of data.</p>
@@ -255,5 +353,21 @@
 </div>
 
 <script src="./index.js"></script>
+
+<!-- Waitlist Modal -->
+<div id="waitlistModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>🚀 Mirrora VPN Coming Soon!</h2>
+        <p>Be among the first 100 users to get <strong>3 months of free VPN service</strong>!</p>
+        <p>Write "To the stars!" in your message to claim this special offer.</p>
+        <div class="waitlist-form">
+            <a href="mailto:hello@mirroravpn.com?subject=Join Mirrora VPN Waitlist&body=Hi! I want to join the Mirrora VPN waitlist. To the stars! 🌟" class="btn-premium">
+                Join Waitlist via Email
+            </a>
+        </div>
+        <p class="modal-note">First 100 users get 3 months free when they write "To the stars!"</p>
+    </div>
+</div>
 </body>
 </html> 

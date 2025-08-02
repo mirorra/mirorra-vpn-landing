@@ -147,6 +147,114 @@ const throttledScroll = debounce(function() {
 
 window.addEventListener('scroll', throttledScroll);
 
+// Modal functionality - make it globally available
+window.showWaitlistModal = function() {
+    console.log('showWaitlistModal called');
+    const modal = document.getElementById('waitlistModal');
+    console.log('Modal element:', modal);
+    
+    if (modal) {
+        console.log('Showing modal...');
+        
+        // Блокируем скролл до показа модального окна
+        document.body.classList.add('modal-open');
+        
+        // Показываем модальное окно
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.visibility = 'visible';
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+        modal.style.zIndex = '9999';
+        modal.style.backdropFilter = 'blur(4px)';
+        
+        // Добавляем класс для анимации контента с небольшой задержкой
+        requestAnimationFrame(() => {
+            modal.classList.add('show');
+        });
+        
+        console.log('Modal should be visible now');
+    } else {
+        console.log('Modal not found!');
+    }
+}
+
+window.closeWaitlistModal = function() {
+    console.log('closeWaitlistModal called');
+    const modal = document.getElementById('waitlistModal');
+    if (modal) {
+        console.log('Hiding modal...');
+        // Сначала убираем класс для анимации контента
+        modal.classList.remove('show');
+        
+        // Ждем окончания анимации контента, затем скрываем модальное окно
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.style.visibility = 'hidden';
+            modal.style.opacity = '0';
+            modal.style.pointerEvents = 'none';
+            modal.style.zIndex = '-9999';
+            modal.style.backdropFilter = 'blur(0px)';
+            document.body.classList.remove('modal-open');
+        }, 300); // Ждем окончания CSS transition
+        
+        console.log('Modal should be hidden now');
+    }
+}
+
+// Add modal event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up modal...');
+    const modal = document.getElementById('waitlistModal');
+    const closeBtn = document.querySelector('.close');
+    
+    console.log('Modal element:', modal);
+    console.log('Close button:', closeBtn);
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            console.log('Close button clicked');
+            window.closeWaitlistModal();
+        });
+    }
+    
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                console.log('Modal background clicked');
+                window.closeWaitlistModal();
+            }
+        });
+    }
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            console.log('Escape key pressed');
+            window.closeWaitlistModal();
+        }
+    });
+    
+    // Test if functions are available
+    console.log('showWaitlistModal available:', typeof window.showWaitlistModal);
+    console.log('closeWaitlistModal available:', typeof window.closeWaitlistModal);
+    
+    // Add click handlers to all waitlist buttons
+    const waitlistButtons = document.querySelectorAll('[onclick*="showWaitlistModal"]');
+    console.log('Found waitlist buttons:', waitlistButtons.length);
+    
+    waitlistButtons.forEach((button, index) => {
+        console.log(`Button ${index}:`, button);
+        button.addEventListener('click', function(e) {
+            console.log(`Waitlist button ${index} clicked`);
+            e.preventDefault();
+            e.stopPropagation();
+            window.showWaitlistModal();
+        });
+    });
+});
+
 // Add some interactive features
 document.addEventListener('DOMContentLoaded', function() {
     // Add hover effects to feature cards

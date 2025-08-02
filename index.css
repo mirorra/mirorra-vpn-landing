@@ -14,6 +14,35 @@
     --tw-ring-shadow: 0 0 #0000;
 }
 
+/* Modal default state */
+#waitlistModal {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    z-index: -9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transition: opacity 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
+    backdrop-filter: blur(0px);
+    align-items: center;
+    justify-content: center;
+}
+
+#waitlistModal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
 /* Reset and base styles */
 * {
     margin: 0;
@@ -29,6 +58,12 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+}
+
+/* Prevent page jump when modal opens */
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -70,10 +105,18 @@ h1, h2, h3, h4, h5, h6 {
     color: inherit;
     text-decoration: none;
     transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .logo a:hover {
     opacity: 0.8;
+}
+
+.logo-icon {
+    width: 3rem;
+    height: 3rem;
 }
 
 .nav-links {
@@ -223,6 +266,44 @@ h1, h2, h3, h4, h5, h6 {
     background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
 }
 
+.btn-premium {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: #fff;
+    border: 2px solid #8b5cf6;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    height: 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-premium:hover::before {
+    left: 100%;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+}
+
 .btn-outline {
     background: transparent;
     color: #fff;
@@ -241,6 +322,44 @@ h1, h2, h3, h4, h5, h6 {
 .btn-outline:hover {
     background: #fff;
     color: #000;
+}
+
+.btn-trial {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    border: 2px solid #10b981;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    height: 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-trial::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-trial:hover::before {
+    left: 100%;
+}
+
+.btn-trial:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
 .btn-pulse {
@@ -376,8 +495,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes twinkle {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-100px); }
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-100px);
+    }
 }
 
 .privacy-hero-content {
@@ -406,10 +529,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
+    justify-items: center;
 }
 
 .pricing-card {
@@ -423,6 +547,8 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     height: 100%;
     cursor: default;
+    max-width: 530px;
+    width: 100%;
 }
 
 .pricing-card.featured {
@@ -497,6 +623,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .pricing-button {
     margin-top: auto;
+}
+
+.pricing-note {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    text-align: center;
+    font-style: italic;
 }
 
 /* FAQ section */
@@ -734,6 +868,80 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: underline;
 }
 
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 700px;
+    background: #000000e6;
+    padding: 40px;
+    border: 2px solid #ffffff;
+    border-radius: 0;
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+    transition: all 0.3s ease;
+    align-items: center;
+    text-align: center;
+}
+
+#waitlistModal.show .modal-content {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.modal-content h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.modal-content p {
+    font-family: 'Sora', sans-serif;
+    color: #d1d5db;
+    line-height: 1.6;
+}
+
+.close {
+    color: #9ca3af;
+    float: right;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    transition: color 0.3s;
+}
+
+.close:hover {
+    color: #ffffff;
+}
+
+.waitlist-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.waitlist-form .btn-premium {
+    display: inline-block;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+}
+
+.modal-note {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
 
 /* Responsive design */
 @media (min-width: 768px) {
@@ -741,15 +949,22 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 6rem;
         line-height: 1;
     }
-    
+
     .section-header h2 {
         font-size: 3rem;
         line-height: 1;
     }
-    
+
     .cta-content h2 {
         font-size: 4.5rem;
         line-height: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
     }
 }
 
@@ -757,48 +972,53 @@ h1, h2, h3, h4, h5, h6 {
     .nav-links {
         display: none;
     }
-    
+
     .mobile-menu-btn {
-        display: block;
+        display: none;
     }
-    
+
+    .logo-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
     .hero-content h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
     }
-    
+
     .hero-content p {
         font-size: 1.25rem;
     }
-    
+
     .section-header h2 {
         font-size: 2.25rem;
         line-height: 2.5rem;
     }
-    
+
     .cta-content h2 {
         font-size: 2.25rem;
         line-height: 2.5rem;
     }
-    
+
     .cta-features {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .features-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .pricing-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-links {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .footer-logo {
         font-size: 1.25rem;
     }
@@ -808,19 +1028,34 @@ h1, h2, h3, h4, h5, h6 {
     .container {
         padding: 0 1rem;
     }
-    
+
     .hero-content h1 {
         font-size: 2rem;
     }
-    
+
     .hero-content p {
         font-size: 1rem;
     }
-    
+
     .btn-primary,
     .btn-accent,
     .btn-outline {
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
     }
-} 
+
+
+
+    /* Mobile responsive for modal */
+    @media (max-width: 768px) {
+        .modal-content {
+            width: 95%;
+            padding: 1.5rem;
+            margin: 0 1rem;
+        }
+
+        .modal-content h2 {
+            font-size: 1.5rem;
+        }
+    }
+}
